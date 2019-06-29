@@ -15,7 +15,7 @@ public class Tank {
 	private int height;
 	private int noun;// 方向
 	private int speed;// 移动速度
-
+	public boolean live=true;
 	public int getX() {
 		return x;
 	}

@@ -2,6 +2,11 @@ package object;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+
+import uitl.GameUtil;
+
+import frame.MainFrame;
 
 /**
  * 敌方子弹类
@@ -56,7 +61,16 @@ public class EnemyBullet extends Bullet{
 		}
 		Color c=g.getColor();
 		g.setColor(Color.yellow);
-		g.fillOval(this.getX(),this.getY(), 10, 10);
+		if(MainFrame.mytank.getRect().intersects(this.getRect())){
+			MainFrame.mytank.live=false;
+			indexof=false;
+			for(int i=1;i<=16;i++){
+				Image img=GameUtil.getImage("image/explode/e"+i+".gif");
+				g.drawImage(img,MainFrame.mytank.getX(),MainFrame.mytank.getY(),null);
+			}
+		}else{
+			g.fillOval(this.getX(),this.getY(), 10, 10);
+		}
 		g.setColor(c);
 		return indexof;
 	}

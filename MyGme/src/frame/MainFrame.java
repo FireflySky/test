@@ -7,6 +7,7 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import object.EnemyBullet;
 import object.EnemyTank;
 import object.MyTank;
 
@@ -14,14 +15,16 @@ import uitl.GameUtil;
 
 
 public class MainFrame extends JFrame{
-	MyTank mytank=null;
+	public static MyTank mytank=null;
+	public static MyPanle mypenle=null;
 	static MainFrame main=null;
 	public static void main(String[] args) {
 		main=new MainFrame();
 		
 	}
+
 	public MainFrame() {
-		MyPanle mypenle=new MyPanle();
+		mypenle=new MyPanle();
 		mypenle.setBackground(Color.BLACK);
 		mytank=new MyTank(460,720,1,5,0,0);
 		this.addKeyListener(mytank);
@@ -32,6 +35,7 @@ public class MainFrame extends JFrame{
 		this.setResizable(false);//大小不能改变
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//关闭窗口并释放资源
 		
+		//更新屏幕线程
 		new Thread(new Runnable() {
 			public void run() {
 				try {
@@ -45,19 +49,22 @@ public class MainFrame extends JFrame{
 			}
 		}).start();
 	}
-	class MyPanle extends JPanel{
+	public class MyPanle extends JPanel{
 		Image img=GameUtil.getImage("image/t_up.png");
-		EnemyTank[] Etank=new EnemyTank[5];
+		public EnemyTank[] Etank=new EnemyTank[5];
 		public MyPanle(){
 			carEtank();
 		}
 		@Override
 		public void paint(final Graphics g) {
 			super.paint(g);
+			if(mytank.live){
 			mytank.speed(g);
-			
+			}
 			for(EnemyTank et:Etank){
+				if(et.live){
 				et.speed(g);
+				}
 			}
 		}
 		//创建敌方坦克对象数组

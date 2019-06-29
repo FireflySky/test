@@ -1,6 +1,9 @@
 package object;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+
+import frame.MainFrame;
 
 import uitl.GameUtil;
 /**
@@ -56,7 +59,19 @@ public class MyBullet extends Bullet {
 		}
 		Color c=g.getColor();
 		g.setColor(Color.white);
-		g.fillOval(this.getX(),this.getY(), 10, 10);
+		
+		for(EnemyTank et:MainFrame.mypenle.Etank){
+			if(et.getRect().intersects(this.getRect())){
+				et.live=false;
+				indexof=false;
+				for(int i=1;i<=16;i++){
+					Image img=GameUtil.getImage("image/explode/e"+i+".gif");
+					g.drawImage(img,MainFrame.mytank.getX(),MainFrame.mytank.getY(),null);
+				}
+			}else{
+				g.fillOval(this.getX(),this.getY(), 10, 10);
+			}
+		}	
 		g.setColor(c);
 		return indexof;
 	}

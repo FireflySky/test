@@ -40,6 +40,52 @@ public class MyTank extends Tank implements KeyListener {
 	private int countTime = 10;
 	//坦克的移动
 	public void speed(Graphics g) {
+		spee(g);
+		shel(g);
+	}
+	//发射子弹
+	private void shel(Graphics g){
+		// 发射子弹
+				if (bullet) {
+					if (countTime == 10) {
+						MyBullet bull=null;
+						//调整子弹发射位置
+						switch (this.getNoun()) {
+						case 1:
+							 bull= new MyBullet(this.getX()+16, this.getY()-5,
+									this.getNoun(), 7);
+							break;
+						case 2:
+							bull= new MyBullet(this.getX()+18, this.getY()+38,
+									this.getNoun(), 7);
+							break;
+						case 3:
+							bull= new MyBullet(this.getX(), this.getY()+18,
+									this.getNoun(), 7);
+							break;
+						case 4:
+							bull= new MyBullet(this.getX()+38, this.getY()+18,
+									this.getNoun(), 7);
+							break;
+						}
+						
+						bull.shell(g);
+						list.add(bull);
+						countTime = 0;
+					} else
+						countTime++;
+				}
+				//跟新所有发射的子弹位置
+				for (int i = 0; i < list.size(); i++) {
+					boolean result = list.get(i).shell(g);
+					if (!result) {
+						list.remove(i);
+					}
+				}
+	}
+
+	//坦克移动
+	private void spee(Graphics g){
 		if (!(left || up || right || dow)) {
 			if (img == null) {
 				img = GameUtil.getImage("image/t_up.png");
@@ -71,52 +117,14 @@ public class MyTank extends Tank implements KeyListener {
 			this.setNoun(2);
 			img = GameUtil.getImage("image/t_dow.png");
 		}
-		// 发射子弹
-		if (bullet) {
-			if (countTime == 10) {
-				MyBullet bull=null;
-				//调整子弹发射位置
-				switch (this.getNoun()) {
-				case 1:
-					 bull= new MyBullet(this.getX()+16, this.getY()-5,
-							this.getNoun(), 7);
-					break;
-				case 2:
-					bull= new MyBullet(this.getX()+18, this.getY()+38,
-							this.getNoun(), 7);
-					break;
-				case 3:
-					bull= new MyBullet(this.getX(), this.getY()+18,
-							this.getNoun(), 7);
-					break;
-				case 4:
-					bull= new MyBullet(this.getX()+38, this.getY()+18,
-							this.getNoun(), 7);
-					break;
-				}
-				
-				bull.shell(g);
-				list.add(bull);
-				countTime = 0;
-			} else
-				countTime++;
-		}
-		//跟新所有发射的子弹位置
-		for (int i = 0; i < list.size(); i++) {
-			boolean result = list.get(i).shell(g);
-			if (!result) {
-				list.remove(i);
-			}
-		}
 		g.drawImage(img, this.getX(), this.getY(), null);
 		this.setWidth(img.getWidth(null));
 		this.setHeight(img.getHeight(null));
 	}
-
+	
 	// 键盘按下抬起事件
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	// 键盘按下事件
