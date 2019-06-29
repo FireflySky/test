@@ -1,6 +1,7 @@
 package object;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -71,6 +72,7 @@ public class EnemyBullet extends Bullet{
 		}else{
 			g.fillOval(this.getX(),this.getY(), 10, 10);
 		}
+		
 		g.setColor(c);
 		return indexof;
 	}

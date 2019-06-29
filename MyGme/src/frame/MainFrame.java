@@ -1,12 +1,16 @@
 package frame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import object.BackLawn;
 import object.EnemyBullet;
 import object.EnemyTank;
 import object.MyTank;
@@ -18,6 +22,7 @@ public class MainFrame extends JFrame{
 	public static MyTank mytank=null;
 	public static MyPanle mypenle=null;
 	static MainFrame main=null;
+	private BackLawn laown=null;
 	public static void main(String[] args) {
 		main=new MainFrame();
 		
@@ -27,6 +32,7 @@ public class MainFrame extends JFrame{
 		mypenle=new MyPanle();
 		mypenle.setBackground(Color.BLACK);
 		mytank=new MyTank(460,720,1,5,0,0);
+		laown=new BackLawn(50, 300, 0, 0);
 		this.addKeyListener(mytank);
 		this.setTitle("̹坦克大战");
 		this.setVisible(true);//显示界面
@@ -51,27 +57,44 @@ public class MainFrame extends JFrame{
 	}
 	public class MyPanle extends JPanel{
 		Image img=GameUtil.getImage("image/t_up.png");
-		public EnemyTank[] Etank=new EnemyTank[5];
+		public ArrayList<EnemyTank> Etank=new ArrayList<EnemyTank>();
 		public MyPanle(){
 			carEtank();
 		}
 		@Override
 		public void paint(final Graphics g) {
 			super.paint(g);
+			
+			laown.pen(g);//画草坪背景
 			if(mytank.live){
 			mytank.speed(g);
+			}else{
+				//死亡
+				g.setColor(Color.red);
+				Font f=new Font("华文彩云",Font.BOLD,50);
+				g.setFont(f);
+				g.drawString("游戏失败", 300, 400);
 			}
-			for(EnemyTank et:Etank){
-				if(et.live){
-				et.speed(g);
+			if(Etank.size()!=0){
+			for(int i=0;i<Etank.size();i++){
+				if(Etank.get(i).live){
+					Etank.get(i).speed(g);
+				}else{
+					Etank.remove(i);
 				}
+			}
+			}else{
+				g.setColor(Color.red);
+				Font f=new Font("华文彩云",Font.BOLD,50);
+				g.setFont(f);
+				g.drawString("恭喜你，获得胜利", 300, 400);
 			}
 		}
 		//创建敌方坦克对象数组
 		private void carEtank(){
-			for(int i=0;i<Etank.length;i++){
+			for(int i=0;i<10;i++){
 				EnemyTank e=new EnemyTank();
-				Etank[i]=e;
+				Etank.add(e);
 			}
 		}
 	}
