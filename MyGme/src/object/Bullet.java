@@ -9,6 +9,7 @@ private int x;
 private int y;
 private int noun;
 private int speed;
+
 public int getX() {
 	return x;
 }
