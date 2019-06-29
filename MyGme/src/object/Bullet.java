@@ -1,6 +1,9 @@
 package object;
+
+import java.awt.Rectangle;
+
 /**
- * 子弹类
+ * 子弹父类
  * @author Administrator
  *
  */
@@ -45,5 +48,7 @@ public Bullet() {
 	super();
 	// TODO Auto-generated constructor stub
 }
-
+public  Rectangle   getRect(){
+	return  new Rectangle((int)x, (int)y, 10, 10);
+}
 }

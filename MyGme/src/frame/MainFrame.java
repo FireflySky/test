@@ -7,6 +7,7 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import object.EnemyTank;
 import object.MyTank;
 
 import uitl.GameUtil;
@@ -46,13 +47,25 @@ public class MainFrame extends JFrame{
 	}
 	class MyPanle extends JPanel{
 		Image img=GameUtil.getImage("image/t_up.png");
-		
+		EnemyTank[] Etank=new EnemyTank[5];
+		public MyPanle(){
+			carEtank();
+		}
 		@Override
 		public void paint(final Graphics g) {
 			super.paint(g);
-//			g.drawImage(img,460,720,null);
 			mytank.speed(g);
+			
+			for(EnemyTank et:Etank){
+				et.speed(g);
+			}
 		}
-
+		//创建敌方坦克对象数组
+		private void carEtank(){
+			for(int i=0;i<Etank.length;i++){
+				EnemyTank e=new EnemyTank();
+				Etank[i]=e;
+			}
+		}
 	}
 }

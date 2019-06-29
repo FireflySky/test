@@ -20,7 +20,7 @@ public class MyTank extends Tank implements KeyListener {
 	private boolean right = false;
 	private boolean dow = false;
 	private boolean bullet = false;
-	ArrayList<MyBullet> list = null;
+	static ArrayList<MyBullet> list = null;
 
 	public MyTank(int x, int y, int noun, int speed, int width, int height) {
 		super(x, y, noun, speed, width, height);
@@ -38,7 +38,7 @@ public class MyTank extends Tank implements KeyListener {
 	 */
 	private Image img = null;
 	private int countTime = 10;
-	//绘制坦克
+	//坦克的移动
 	public void speed(Graphics g) {
 		if (!(left || up || right || dow)) {
 			if (img == null) {
@@ -50,7 +50,7 @@ public class MyTank extends Tank implements KeyListener {
 			int x = this.getX();
 			x -= this.getSpeed();
 			this.setX(x);
-			this.setNoun(3);
+			this.setNoun(3);//移动方向
 			img = GameUtil.getImage("image/t_left.png");
 		} else if (right && this.getX() < 950) {
 			int x = this.getX();
@@ -97,7 +97,6 @@ public class MyTank extends Tank implements KeyListener {
 				
 				bull.shell(g);
 				list.add(bull);
-				System.out.println("add");
 				countTime = 0;
 			} else
 				countTime++;

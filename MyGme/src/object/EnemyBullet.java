@@ -1,21 +1,21 @@
 package object;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
-import uitl.GameUtil;
 /**
- * 玩家子弹类
+ * 敌方子弹类
  * @author Administrator
  *
  */
-public class MyBullet extends Bullet {
-
-	public MyBullet(int x, int y, int noun, int speed) {
-		super(x, y, noun, speed);
-	}
-
-	public MyBullet() {
+public class EnemyBullet extends Bullet{
+	
+	public EnemyBullet() {
 		super();
+		// TODO Auto-generated constructor stub
+	}
+	public EnemyBullet(int x, int y, int noun, int speed) {
+		super(x, y, noun, speed);
 	}
 	private boolean indexof=true;
 	//1为上 2为下 3为左 4为右
@@ -55,7 +55,7 @@ public class MyBullet extends Bullet {
 			break;
 		}
 		Color c=g.getColor();
-		g.setColor(Color.white);
+		g.setColor(Color.yellow);
 		g.fillOval(this.getX(),this.getY(), 10, 10);
 		g.setColor(c);
 		return indexof;
